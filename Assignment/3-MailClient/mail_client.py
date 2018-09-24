@@ -5,7 +5,6 @@ import base64
 msg = "\r\n I love computer networks!"
 endmsg = "\r\n.\r\n"
 # Choose a mail server (e.g. Google mail server) and call it mailserver
-mailserver = ('smtp.sjtu.edu.cn', 25)
 
 def sendRecvMsg(msg, return_code):
     if msg:
