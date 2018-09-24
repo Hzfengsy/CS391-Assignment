@@ -37,6 +37,7 @@ while True:
         #Send one HTTP header line into socket
         #Fill in start
         #Fill in end
+
         #Send the content of the requested file to  the  client
         for i in range(0, len(outputdata)):
             connectionSocket.send(outputdata[i])
@@ -45,6 +46,7 @@ while True:
         #Send response message for file not found
         #Fill in start
         #Fill in end
+        
         #Close client socket
         #Fill in start
         #Fill in end 

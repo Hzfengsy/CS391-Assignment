@@ -6,6 +6,7 @@ This is the GitHub Repository for programming assignments of computer networking
 ### Assignment #1
 1. [Web Server](Assignment/1-WebServer)
 2. [UDP Pinger](Assignment/2-UDPPinger)
+3. [Mail Client](Assignment/3-MailClient)
 
 ## Requirements
 - Python 2.7
