@@ -7,19 +7,8 @@ serverSocket = socket(AF_INET, SOCK_STREAM)
 serverSocket.bind(('0.0.0.0', 8080))
 serverSocket.listen(10)
 
-def recv_data(connection):
-    total_data = ''
-    while True:
-        data = connection.recv()
-        if not data:
-            break
-        else:
-            total_data += data
-    return total_data
-
 def serve(connectionSocket, addr):
     try:
-        # message = recv_data(connectionSocket)
         message = connectionSocket.recv(1024)
         filename = message.split()[1]
         f = open(filename[1:])
