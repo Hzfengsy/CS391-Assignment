@@ -1,4 +1,4 @@
-# Programming Assignment of Computer Networkin
+# Programming Assignment of Computer Networking
 
 This is the GitHub Repository for programming assignments of computer networking(CS391, Fall 2018), created and updated by [Siyuan Feng](https://github.com/Hzfengsy)
 
