@@ -1,3 +1,4 @@
 .vscode/*
 *.pyc
 env.py
+.DS_Store
