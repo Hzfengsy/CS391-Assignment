@@ -86,9 +86,9 @@ while 1:
             except:
                 print "Illegal request"
         else:
-        # HTTP response message for file not found
-        # Fill in start.
-        # Fill in end.
+            # HTTP response message for file not found
+            # Fill in start.
+            # Fill in end.
     # Close the client and the server sockets
     tcpCliSock.close()
 ```

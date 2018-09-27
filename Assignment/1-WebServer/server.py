@@ -32,8 +32,7 @@ while True:
     #Establish the connection
     print('Ready to serve...')
     connectionSocket, addr = serverSocket.accept()
-    serve(connectionSocket, addr)
-    # thread = threading.Thread(target=serve, args=(connectionSocket, addr))
-    # thread.start()
+    thread = threading.Thread(target=serve, args=(connectionSocket, addr))
+    thread.start()
 
 serverSocket.close() 
