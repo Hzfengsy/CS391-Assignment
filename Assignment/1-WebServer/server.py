@@ -1,8 +1,8 @@
 #import socket module
-from socket import *
+import socket
 import threading
 
-serverSocket = socket(AF_INET, SOCK_STREAM)
+serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #Prepare a sever socket
 serverSocket.bind(('0.0.0.0', 8080))
 serverSocket.listen(10)
@@ -14,18 +14,18 @@ def serve(connectionSocket, addr):
         f = open(filename[1:])
         outputdata = f.read().split('\n')
         #Send one HTTP header line into socket
-        connectionSocket.send('HTTP/1.1 200 OK\n\n')
+        connectionSocket.send(b'HTTP/1.1 200 OK\n\n')
         #Send the content of the requested file to the client
         for i in range(0, len(outputdata)):
-            connectionSocket.send(outputdata[i])
+            connectionSocket.send(outputdata[i].encode())
         connectionSocket.close()
-    except IOError as e:
+    except IOError:
         #Send response message for file not found
-        outputdata = 'HTTP/1.1 404 Not Found\n\n'
+        outputdata = b'HTTP/1.1 404 Not Found\n\n'
         connectionSocket.send(outputdata)
         #Close client socket
         connectionSocket.close()
-    except Exception as e:
+    except Exception:
         connectionSocket.close()
 
 while True:

@@ -1,5 +1,4 @@
-from __future__ import print_function
-from socket import *
+import socket
 from env import *
 import base64
 import ssl
@@ -33,15 +32,18 @@ def sendImg(img, clientSocket):
 
 def sendRecvMsg(msg, clientSocket, return_code=None):
     if msg:
-        clientSocket.send(msg)
+        if isinstance(msg, str):
+            clientSocket.send(msg.encode())
+        else:
+            clientSocket.send(msg)
     if return_code:
-        recv1 = clientSocket.recv(1024)
-        print(recv1, end='')
-        if recv1[:3] != str(return_code):
+        recv = clientSocket.recv(1024).decode()
+        print(recv, end='')
+        if recv[:3] != str(return_code):
             print('%d reply not received from server.' % (return_code))
 
 # Create socket called clientSocket and establish a TCP connection with mailserver
-clientSocket = socket(AF_INET, SOCK_STREAM)
+clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 clientSocket.connect(mailserver)
 sendRecvMsg(None, clientSocket, 220)
 
@@ -59,10 +61,10 @@ sendRecvMsg('HELO Alice\r\n', sslClientSocket, 250)
 sendRecvMsg('auth login\r\n', sslClientSocket, 334)
 
 # Send USER command and print server response.
-sendRecvMsg('%s\r\n' %(base64.b64encode(username)), sslClientSocket, 334)
+sendRecvMsg('%s\r\n' % (base64.b64encode(username.encode()).decode()), sslClientSocket, 334)
 
 # Send USER command and print server response.
-sendRecvMsg('%s\r\n' %(base64.b64encode(password)), sslClientSocket, 235)
+sendRecvMsg('%s\r\n' % (base64.b64encode(password.encode()).decode()), sslClientSocket, 235)
 
 # Send MAIL FROM command and print server response.
 sendRecvMsg('MAIL FROM: %s\r\n' % (mail_from), sslClientSocket, 250)

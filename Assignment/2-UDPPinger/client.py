@@ -1,7 +1,7 @@
-from socket import *
+import socket 
 import time
 import numpy as np
-clientSocket = socket(AF_INET, SOCK_DGRAM)
+clientSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 addr = ('localhost', 8080)
 rtts = []
@@ -13,15 +13,16 @@ for i in range(total):
         sequence_number = str(i + 1)
         localtime = time.asctime( time.localtime(start_time) )
         message = ' '.join(['PING', sequence_number, localtime])
-        clientSocket.sendto(message, addr)
+        clientSocket.sendto(message.encode(), addr)
         clientSocket.settimeout(1.0)
         recv_message, address = clientSocket.recvfrom(1024)
+        recv_message = recv_message.decode()
         end_time = time.time()
         rtt = (end_time - start_time) * 1000
         rtts.append(rtt)
         print("PING %s: time=%.3f ms" % (sequence_number, rtt))
         print('-->message:' + recv_message)
-    except timeout:
+    except socket.timeout:
         loss += 1
         print("PING %s: Request timed out." % sequence_number)
 

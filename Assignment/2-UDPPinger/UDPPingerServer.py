@@ -1,9 +1,9 @@
 # We will need the following module to generate randomized lost packets
 import random
-from socket import *
+import socket
 # Create a UDP socket
 # Notice the use of SOCK_DGRAM for UDP packets
-serverSocket = socket(AF_INET, SOCK_DGRAM)
+serverSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 # Assign IP address and port number to socket
 serverSocket.bind(('0.0.0.0', 8080))
 while True:

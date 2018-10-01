@@ -9,7 +9,7 @@ This is the GitHub Repository for programming assignments of computer networking
 3. [Mail Client](Assignment/3-MailClient)
 4. [Multi-threaded Web Proxy](Assignment/4-WebProxy)
 ## Requirements
-- Python 2.7
+- Python 3.5+
 
 ## License
 This project is under MIT License.
