@@ -1,4 +1,7 @@
 .vscode/*
+*/__pycache__/*
 *.pyc
 env.py
 .DS_Store
+*/.idea/*
+*/cache/*
