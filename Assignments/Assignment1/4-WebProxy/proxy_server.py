@@ -6,6 +6,7 @@ import os
 import threading
 import select
 import hashlib
+import traceback
 
 bind_host = ('0.0.0.0', 8080)
 bind_num = 20
@@ -68,7 +69,7 @@ def forwardMsg(clientSocket, serverSocket, initMsg=[], cache=False, bufferSize=4
     # Register client to read event.
     http_epoll.register(clientSocket.fileno(), select.EPOLLIN)
     # Register server to write event.
-    http_epoll.register(serverSocket.fileno(), 0)
+    http_epoll.register(serverSocket.fileno(), select.EPOLLOUT)
 
     opposites = {serverSocket.fileno(): clientSocket.fileno(), clientSocket.fileno(): serverSocket.fileno()}
     sockets = {serverSocket.fileno(): serverSocket, clientSocket.fileno(): clientSocket}
@@ -81,6 +82,10 @@ def forwardMsg(clientSocket, serverSocket, initMsg=[], cache=False, bufferSize=4
             events = http_epoll.poll()
             for fileno, event in events:
                 if event & select.EPOLLHUP:
+                    # Finish caching when socket closed.
+                    if cache and cacheFile != None:
+                        cacheFile.close()
+                        cacheFile = None
                     # Close connection when socket hanged up.
                     _closeConnection(http_epoll, clientSocket, serverSocket)
                     return
@@ -100,6 +105,10 @@ def forwardMsg(clientSocket, serverSocket, initMsg=[], cache=False, bufferSize=4
                         elif cache and cacheFile != None and fileno == serverSocket.fileno():
                             cacheFile.write(data)
                     else:
+                        # Finish caching when socket closed.
+                        if cache and cacheFile != None and fileno == serverSocket.fileno():
+                            cacheFile.close()
+                            cacheFile = None
                         # Close connection when socket closed by remote.
                         _closeConnection(http_epoll, clientSocket, serverSocket)
                         return
@@ -145,10 +154,11 @@ def httpsProxy(connectionSocket, message, host, port=443):
         # Parse the header and get request version.
         request = HTTPRequestParser(message)
         # Send response to browser.
-        connectionSocket.send("{} 200 Connection Established\r\n\r\n".format(request.request_version))
+        connectionSocket.send("{} 200 Connection Established\r\n\r\n".format(request.request_version).encode())
         # Forward message to the server.
         forwardMsg(connectionSocket, serverSocket)
     except:
+        traceback.print_exc()
         print("Illegal request")
 
 def httpProxy(connectionSocket, message, host, port=80):
@@ -159,6 +169,7 @@ def httpProxy(connectionSocket, message, host, port=80):
         # Forward message and cache files.
         forwardMsg(connectionSocket, serverSocket, initMsg=[message], cache=True)
     except:
+        traceback.print_exc()
         print("Illegal request")
 
 def proxyServe(serverSocket):

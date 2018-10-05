@@ -67,10 +67,10 @@ sendRecvMsg('%s\r\n' % (base64.b64encode(username.encode()).decode()), sslClient
 sendRecvMsg('%s\r\n' % (base64.b64encode(password.encode()).decode()), sslClientSocket, 235)
 
 # Send MAIL FROM command and print server response.
-sendRecvMsg('MAIL FROM: %s\r\n' % (mail_from), sslClientSocket, 250)
+sendRecvMsg('MAIL FROM: <%s>\r\n' % (mail_from), sslClientSocket, 250)
 
 # Send RCPT TO command and print server response.
-sendRecvMsg('RCPT TO: %s\r\n' % (rcpt_to), sslClientSocket, 250)
+sendRecvMsg('RCPT TO: <%s>\r\n' % (rcpt_to), sslClientSocket, 250)
 
 # Send DATA command and print server response.
 sendRecvMsg('DATA\r\n', sslClientSocket, 354)
