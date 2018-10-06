@@ -3,7 +3,7 @@
 \usepackage{fullpage} % changes the margin
 \usepackage{mathpazo}
 \usepackage{multicol}
-\usepackage{graphicx}
+\usepackage{graphicx, float}
 \usepackage{enumerate}
 \usepackage{pythonhighlight}
 \usepackage{booktabs}
@@ -70,23 +70,24 @@ Here is a list for $return\_code$ and $return\_msg$ in different conditions.
 		\item The last bit has just recent sent out from Host A.
 		\item The first bit is on the way to Host B.
 		\item The first bit has already received by Host B.
-		\item According to the problem, $d_{prop} = d_{trans}$. That is $m / s = L / R $. Hence $$ m = s \frac{L}{R} = 5.23 \cdot 10^5 \text{meters}$$
+		\item According to the problem, $d_{prop} = d_{trans}$. That is $m / s = L / R $. Hence $$ m = s \frac{L}{R} = 5.36 \cdot 10^5 \text{meters}$$
 	\end{enumerate}
+	
 \section*{P9}
 	\begin{enumerate}[a.]
 		\item $N_{circuit} = R / a = 10000$.
-		\item The probability will be $$P(n \leq N) = \sum_{n=N}^M \begin{pmatrix} M \\ n\end{pmatrix} \cdot p^n \cdot (1-p)^{M-n}$$
+		\item The probability will be $$P(n > N) = \sum_{n=N+1}^M \begin{pmatrix} M \\ n\end{pmatrix} \cdot p^n \cdot (1-p)^{M-n}$$
 	\end{enumerate}
+	
 \section*{P14}
 	\begin{enumerate}[a.]
-		\item $d_{total} = d_{queue} + d_{trans} = IL/R(1-I) + L/R$
-		\item According $I = La / R$. Hence 
-		\begin{align*}
-			d_{total} &= \frac{IL}{R(1-I)} + \frac{L}{R} \\
-					  &= \frac{L}{R(1-I)} \\
-					  &= \frac{L}{R(1-La / R)} \\
-					  &= \frac{L}{R - La}
-		\end{align*} 
+		\item $d_{total} = d_{queue} + d_{trans} = IL/R(1-I) + L/R = \frac{L}{R(1-I)} = \frac{L}{R - La}$
+		\item According $I = La / R$. Let $x = L / R$, there is $d_{total} = \frac{x}{1 - ax}$. Here is plot.
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width = 0.7 \linewidth] {Figure1}
+			\caption{Delay function of $L / R$ with $a = 0.5$}
+		\end{figure}
 	\end{enumerate}
 \section*{P16}
 \hspace{14pt} The transmission delay $d_{trans} = 10 \text{ msec}$, and total delay $d = 20 \text{ msec}$. On average, there is only one packet is being transmitted. Then $N = 11$. 
@@ -99,6 +100,6 @@ According to Little's formula, $N = a \cdot d$. Hence, $$a = \frac{N}{d} = 550\t
 		\item There are at most $0.16\text{ Mb}$ in this link at any given time no matter how large the file is. (In this case, the file must be larger than $0.16\text{ Mb}$)
 		\item The bandwidth-delay product determines the maximum number of bits that will be in the link at any time.
 		\item $Width_{bit} = m / (R \cdot d_{prop}) = s / R = 125 \text{meters}$, which is longer than a football field.
-		\item $Width_{bit} = m / (R \cdot d_{prop}) =  m /(R \cdot m / s) = s / R$
+		\item $Width_{bit} = \min(m / (R \cdot d_{prop}), m) =  \min(m /(R \cdot m / s), m) = \min(s / R, m)$
 	\end{enumerate}
 \end{document}
