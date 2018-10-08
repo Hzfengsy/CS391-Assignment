@@ -4,7 +4,7 @@ import base64
 import ssl
 msg = "\r\n I love computer networks!\r\n"
 endmsg = "\r\n.\r\n"
-header = "From: "'Hzfengsy'" <%s>\r\nTo: "'Hzfengsy'"<%s>\r\nSubject: Network Assignment Test\r\n"
+header = "From: "'Hzfengsy'" <%s>\r\nTo: "'Hzfengsy'"<%s>\r\nSubject: Network Assignment Test\r\n" % (mail_from, rcpt_to)
 boundary = "XX-Hzfengsy-Mail-Client-XX"
 MIME_header = "MIME-Version: 1.0\r\nContent-Type: multipart/mixed; boundary=\"%s\"\r\n" % (boundary)
 # Choose a mail server (e.g. Google mail server) and call it mailserver
