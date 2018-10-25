@@ -1,0 +1,138 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{lipsum} %This package just generates Lorem Ipsum filler text. 
+\usepackage{fullpage} % changes the margin
+\usepackage{mathpazo}
+\usepackage{multicol}
+\usepackage{graphicx, float}
+\usepackage{enumerate}
+\usepackage{pythonhighlight}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage{array}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{Chapter 3} \hfill \textbf{Siyuan Feng (516030910575)} \\
+\normalsize {\bf CS 391 Computer Networking} \hfill ACM Class, Zhiyuan College, SJTU\\
+Prof.~{\bf Yanmin Zhu} \hfill Due Date: October 25, 2018\\
+TA.~{\bf Haobing Liu} \hfill Submit Date: \today
+
+\section*{P3}
+\paragraph{}
+	\begin{tabular}{lr}
+	 &01010011\\
+	+&01100110\\
+	+&01110100\\
+	\hline
+	=&100101101
+	\end{tabular}
+	
+Wrap around the extra bit.
+	
+	\begin{tabular}{lr}
+	 &00101101\\
+	+&1\\
+	\hline
+	=&00101110
+	\end{tabular}
+
+Then, invert all the bits to get the check sum. Hence, the check sum is 11010001.
+
+The receiver adds the four words (the three original words and the
+checksum). If the sum contains a zero, the receiver knows there has been an error. 
+
+All one-bit errors will be detected. But two-bit error may be undetected. (e.g., if three bits convert to 01010010, 01100111 and 01110100)
+
+\section*{P7}
+\paragraph{}
+To best answer this question, consider why we needed sequence numbers in the first place. We saw that the sender needs sequence numbers so that the receiver can tell if a data packet is a duplicate of an already received data packet. In the case of ACKs, the sender does not need this info (i.e., a sequence number on an ACK) to tell detect a duplicate ACK. A duplicate ACK is obvious to the rdt3.0 receiver, since when it has received the original ACK it transitioned to the next state. The duplicate ACK is not the ACK that the sender needs and hence is ignored by the rdt3.0 sender.
+\section*{P10}
+\paragraph{}
+Since, knowing the maximum delay, we set a timeout at $Wait for NAK at 0$ and $Wait for NAK at 1$. If the sender dose not receive $ACK$ or $NAK$ within a certain time, we assume that the packet has lost and send the packet again.
+
+\section*{P17}
+\newpage
+
+\section*{P33}
+\paragraph{}
+Suppose that the sender sends packet $P1$ and retransmitted packet $P2$ with the timer for $P1$.Further more, after $P2$ sent away, the sender received the acknowledge for $P1$. However, the sender will take mistake this acknowledge for $P1$, and calculate a wrong $\mathsf{SampleRTT}$.
+\section*{P40}
+\begin{enumerate}[(a)]
+	\item TCP slowstarts at intervals $[1, 6]$ and $[23, 26]$.
+	\item TCP congestion avoidance at intervals $[6, 16]$ and $[17, 22]$.
+	\item After the $16^{th}$ round, packet loss by recognizing a triple duplicate ACK. If there is a timeout, the window size would reduce to 1.
+	\item After the $22^{th}$ round, segment loss due to timeout, and window size would reduce to 1.
+	\item The threshold is set to initially 32
+	\item The threshold is set to half value of the congestion window when packets loss. When loss appeared at round 16, the congestion window size is 42 and the threshold is 21.
+	\item When loss appeared at round 22, the congestion window size is 29 and the threshold is 14.
+	\item Hence, packet 70 is in 7th round. \\
+	\begin{tabular}{c c}
+		packet & round \\
+		1 & 1 \\
+		2 - 3 & 2\\
+		4 - 7 & 3\\
+		8 - 15 & 4\\
+		16 - 31 & 5 \\
+		32 - 63 & 6 \\
+		64 - 95 & 7 \\
+	\end{tabular} 
+	\item The new value of threshold and window will be 4 and 7.
+	\item Threshold is 21 and window size is 1.
+	\item Total number is 52. \\
+	\begin{tabular}{c c}
+		round & packet number \\
+		17 & 1 \\
+	 	18 - 3 & 18\\
+		19 - 7 & 19\\
+		20 - 15 & 20\\
+		21 - 31 & 16 \\
+		22 - 63 & 21 \\
+	\end{tabular} 
+	
+\end{enumerate}
+
+\section*{P42}
+\paragraph{}
+TCP uses pipeline method, that is sender is able to send multiply segment. The doubling of the timeout interval prevent a sender from retransmit too many packets.
+\section*{P50}
+\begin{table*}[!htp]
+		\centering
+		\begin{tabular}{|c|p{3cm}<{\centering}|p{3cm}<{\centering}|p{3cm}<{\centering}|p{3cm}<{\centering}|}
+		\hline
+		Time(msec) & Window Size of C1  & Speed of C1 (wins / 0.05) & Window Size of C2 & Speed of C2 (wins / 0.1)\\
+		\hline
+		0 & 10 & 200 & 10 & 100 \\
+		\hline
+		50 & 5 & 100 & & 100 \\
+		\hline
+		100 & 2 & 40 & 5 & 50 \\
+		\hline
+		150 & 1 & 20 & & 50 \\
+		\hline
+		200 & 1 & 20 & 2 & 20 \\
+		\hline
+		250 & 1 & 20 & &20 \\
+		\hline
+		300 & 1 & 20 & 1 & 10 \\
+		\hline
+		350 & 2 & 40 & & 10 \\
+		\hline
+		400 & 1 & 20 & 1 & 10 \\
+		\hline
+		450 & 2 & 40 & & 10 \\
+		\hline
+		500 & 1 & 20 & 1 & 10 \\
+		\hline
+		550 & 2 & 40 & & 10 \\
+		\hline
+		... & ... & ... & ... & ... \\
+		\hline
+		\end{tabular}
+	\end{table*}
+	No, in long time, sending rate of $C1$ is $(40 + 20 + 40 + 20) = 120$ and sending rate of $C2$ is $(10 + 10 + 10 + 10) = 40$
+\end{document}
+    
