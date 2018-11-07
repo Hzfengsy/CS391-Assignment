@@ -1,0 +1,17 @@
+Q2:
+latency: L = L1 + L2 + L3 = 160 ms
+throughput: T = min(T1, T2, T3) = 20 Mbps
+
+Q3:
+all latency is the same, 160 ms
+the sum of all throughput is 20 Mbps
+
+Q4:
+host1 - host4: 
+latency: L_14 = 160 ms
+throughput: T_14 = 20 Mbps
+
+host5 - host6:
+latency: L_56 = 40 ms
+throughput: T_56 = 20 Mbps
+
